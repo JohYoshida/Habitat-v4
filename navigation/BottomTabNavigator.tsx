@@ -8,6 +8,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import ExerciseScreen from '../screens/ExerciseScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -32,7 +33,15 @@ export default function BottomTabNavigator() {
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="md-barbell" color={color} />,
         }}
-      /><BottomTab.Screen
+      />
+      <BottomTab.Screen
+        name="Settings"
+        component={SettingsNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="md-settings" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
         name="TabTwo"
         component={TabTwoNavigator}
         options={{
@@ -90,5 +99,19 @@ function ExerciseNavigator() {
         options={{ headerTitle: 'Exercise' }}
       />
     </ExerciseStack.Navigator>
+  );
+}
+
+const SettingsStack = createStackNavigator<SettingsParamList>();
+
+function SettingsNavigator() {
+  return (
+    <SettingsStack.Navigator>
+      <SettingsStack.Screen
+        name="SettingsScreen"
+        component={SettingsScreen}
+        options={{ headerTitle: 'Settings' }}
+      />
+    </SettingsStack.Navigator>
   );
 }
