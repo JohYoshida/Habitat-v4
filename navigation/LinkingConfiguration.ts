@@ -9,7 +9,9 @@ export default {
           Exercise: {
             screens: {
               ExerciseScreen: "exercise",
-              AddExerciseScreen: "add-exercise"
+              AddExerciseScreen: "add-exercise",
+              AddWorkoutScreen: "add-workout",
+              ViewExerciseScreen: "view-exercice"
             }
           },
           Settings: {

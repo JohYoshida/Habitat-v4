@@ -10,6 +10,9 @@ export type BottomTabParamList = {
 
 export type ExerciseParamList = {
   ExerciseScreen: undefined;
+  AddExerciseScreen: undefined,
+  AddWorkoutScreen: undefined,
+  ViewExerciseScreen: undefined
 };
 
 export type SettingsParamList = {
