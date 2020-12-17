@@ -8,7 +8,8 @@ export default {
         screens: {
           Exercise: {
             screens: {
-              ExerciseScreen: "exercise"
+              ExerciseScreen: "exercise",
+              AddExerciseScreen: "add-exercise"
             }
           },
           Settings: {
