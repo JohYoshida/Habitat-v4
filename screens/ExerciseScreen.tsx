@@ -1,14 +1,43 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import {
+  StyleSheet
+} from 'react-native';
+import {
+  Button,
+  Container,
+  Content,
+  Icon,
+  List,
+  ListItem,
+  Spinner,
+  StyleProvider,
+  Text as ButtonText
+} from "native-base";
+import {
+  Text,
+  View
+} from '../components/Themed';
+// Native Base theme requirements
+import getTheme from "../native-base-theme/components";
+import platform from "../native-base-theme/variables/platform";
 
-import { Text, View } from '../components/Themed';
-
-export default function ExerciseScreen() {
+export default function ExerciseScreen(props) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Exercise</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-    </View>
+    <StyleProvider style={getTheme(platform)}>
+      <Container>
+        <View style={styles.container}>
+          <Content padder>
+            <Text style={styles.title}>Exercise</Text>
+            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+            <View>
+              <Button>
+                <ButtonText style={styles.text}>hello</ButtonText>
+              </Button>
+            </View>
+          </Content>
+        </View>
+      </Container>
+    </StyleProvider>
   );
 }
 
@@ -21,6 +50,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  text: {
+    textAlign: 'center'
   },
   separator: {
     marginVertical: 30,
