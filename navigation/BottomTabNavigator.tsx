@@ -70,7 +70,7 @@ function ExerciseNavigator() {
       <ExerciseStack.Screen
         name="View Exercise"
         component={ViewExerciseScreen}
-        options={{ headerTitle: 'View Exercise' }}
+        options={({ route }) => ({ title: route.params.exercise.name })}
       />
     </ExerciseStack.Navigator>
   );
