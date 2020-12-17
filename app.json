@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Habitat",
-    "slug": "Habitat",
+    "name": "Habitat v4",
+    "slug": "Habitat-v4",
     "version": "4.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
