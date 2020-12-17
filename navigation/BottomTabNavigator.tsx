@@ -29,7 +29,7 @@ export default function BottomTabNavigator() {
         name="Settings"
         component={SettingsNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="md-settings" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="md-settings-sharp" color={color} />,
         }}
       />
     </BottomTab.Navigator>
