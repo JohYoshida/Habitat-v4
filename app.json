@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "sdk-40-test",
-    "slug": "sdk-40-test",
-    "version": "1.0.0",
+    "name": "Habitat",
+    "slug": "Habitat",
+    "version": "4.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -10,22 +10,21 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#81C784"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#81C784"
+      },
+      "permissions": ["VIBRATE"]
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
