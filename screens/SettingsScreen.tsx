@@ -15,14 +15,15 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   separator: {
+    alignSelf: 'center',
     marginVertical: 30,
     height: 1,
     width: '80%',
