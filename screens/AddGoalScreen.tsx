@@ -71,7 +71,6 @@ export default function AddGoalScreen(props) {
       type: type,
       value: Number(value)
     })
-    console.log(body);
     postGoal(body).then(() => {
         props.route.params.refreshLastScreen();
         props.navigation.goBack();
