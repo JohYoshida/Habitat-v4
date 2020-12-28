@@ -146,6 +146,17 @@ export default function ExerciseScreen(props) {
             <Button
               style={{ backgroundColor: Colors[colorScheme].primary }}
               onPress={() =>
+                props.navigation.navigate("Add Goal", {
+                  exercises,
+                  refreshLastScreen: onRefresh
+                })
+              }
+            >
+              <Icon name="star-sharp" style={{ color: Colors[colorScheme].onPrimary }}/>
+            </Button>
+            <Button
+              style={{ backgroundColor: Colors[colorScheme].primary }}
+              onPress={() =>
                 props.navigation.navigate("Add Exercise", {
                   exercises,
                   refreshLastScreen: onRefresh
