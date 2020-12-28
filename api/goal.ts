@@ -16,7 +16,7 @@ function fetchGoals() {
 // Get all goals for an exercise from server
 function fetchGoalsByExercise(exercise_id) {
   return new Promise(resolve => {
-    fetch(`${URL}/goals/:exercise_id`, {
+    fetch(`${URL}/goals/${exercise_id}`, {
       method: "GET"
     })
       .then(res => res.json())
@@ -41,7 +41,7 @@ function postGoal(body) {
 }
 
 // Delete goal from server
-function deleteGoal() {
+function deleteGoal(id) {
   return new Promise(resolve => {
     fetch(`${URL}/goal/${id}`, {
       method: "DELETE",
