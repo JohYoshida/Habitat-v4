@@ -406,6 +406,24 @@ export default function ViewExerciseScreen(props) {
         </Button>
           {LifetimeChart}
           {DailyGoalSetter}
+          <Button
+            block
+            bordered
+            style={styles.buttons}
+            borderColor={Colors[colorScheme].primary}
+            backgroundColor={Colors[colorScheme].surface}
+            onPress={() => props.navigation.navigate("Add Goal", {
+                exercise: props.route.params.exercise,
+                refreshLastScreen: onRefresh
+              })
+            }
+          >
+          <ButtonText
+            style={{
+              color: Colors[colorScheme].primary
+            }}
+          >Set goal</ButtonText>
+          </Button>
           {WorkoutsList}
           <View style={styles.buttons}>{DeleteExerciseButtons}</View>
         </ScrollView>
