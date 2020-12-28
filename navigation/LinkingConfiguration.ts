@@ -11,6 +11,7 @@ export default {
               ExerciseScreen: "exercise",
               AddExerciseScreen: "add-exercise",
               AddWorkoutScreen: "add-workout",
+              AddGoalScreen: "add-goal",
               ViewExerciseScreen: "view-exercice"
             }
           },

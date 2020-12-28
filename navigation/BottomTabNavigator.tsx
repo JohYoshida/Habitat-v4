@@ -9,6 +9,7 @@ import ExerciseScreen from '../screens/ExerciseScreen';
 import AddExerciseScreen from '../screens/AddExerciseScreen';
 import ViewExerciseScreen from '../screens/ViewExerciseScreen';
 import AddWorkoutScreen from '../screens/AddWorkoutScreen';
+import AddGoalScreen from '../screens/AddGoalScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import { BottomTabParamList, ExerciseParamList, SettingsParamList } from '../types';
 
@@ -66,6 +67,11 @@ function ExerciseNavigator() {
         name="Add Workout"
         component={AddWorkoutScreen}
         options={{ headerTitle: 'Add Workout' }}
+      />
+      <ExerciseStack.Screen
+        name="Add Goal"
+        component={AddGoalScreen}
+        options={{ headerTitle: 'Add Goal' }}
       />
       <ExerciseStack.Screen
         name="View Exercise"
