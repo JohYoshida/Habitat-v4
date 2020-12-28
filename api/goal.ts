@@ -1,7 +1,7 @@
 import { URL } from "../constants/URLs";
 
-// Get all workouts for an exercise from server
-function fetchGoals(exercise_id) {
+// Get all goals from server
+function fetchGoals() {
   return new Promise(resolve => {
     fetch(`${URL}/goals`, {
       method: "GET"
@@ -13,6 +13,20 @@ function fetchGoals(exercise_id) {
   });
 }
 
+// Get all goals for an exercise from server
+function fetchGoalsByExercise(exercise_id) {
+  return new Promise(resolve => {
+    fetch(`${URL}/goals/:exercise_id`, {
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(json => {
+        resolve(json.data);
+      });
+  });
+}
+
+// Post goal to server
 function postGoal(body) {
   return new Promise(resolve => {
     fetch(`${URL}/goal`, {
@@ -26,6 +40,7 @@ function postGoal(body) {
   });
 }
 
+// Delete goal from server
 function deleteGoal() {
   return new Promise(resolve => {
     fetch(`${URL}/goal/${id}`, {
@@ -39,4 +54,4 @@ function deleteGoal() {
   });
 }
 
-export { fetchGoals, postGoal, deleteGoal };
+export { fetchGoals, fetchGoalsByExercise, postGoal, deleteGoal };
