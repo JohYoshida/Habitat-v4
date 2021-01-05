@@ -21,17 +21,12 @@ export function ProgressBar(props) {
     return (<View></View>);
   } else {
     const total = props.data.reduce((a, b) => a + b, 0);
-    let fill;
-    let max;
+    let fill = Colors[colorScheme].primary;
+    let max = props.goal;
     if (total >= props.goal) {
       fill = Colors[colorScheme].secondary;
       max = total;
-    } else {
-      fill = Colors[colorScheme].primary;
-      max = props.goal;
     }
-    // <View style={{ marginLeft: 10, alignItems: "flex-end", flex: 3 }}>
-    // </View>
     return (
       <View
         style={{ height: 35, padding: 10, flexDirection: "row", justifyContent: "flex-end" }}
