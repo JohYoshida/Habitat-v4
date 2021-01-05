@@ -138,6 +138,9 @@ export default function ViewExerciseScreen(props) {
         setChartData(assembleChartData(data));
         fetchGoalsByExercise(exercise_id).then(data => {
           setGoals(data);
+          data.forEach(datum => {
+            if (datum.type === "daily") setDailyGoal(datum.value);
+          })
           setRefreshing(false);
         });
       });
