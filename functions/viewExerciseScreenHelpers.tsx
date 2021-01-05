@@ -21,19 +21,19 @@ function assembleChartData(workouts) {
   workouts.reverse();
   const charts = {
     // bar chart or goal progress bar?
-    today: {
+    daily: {
       data: [],
       dates: [],
       total: 0
     },
     // bar chart
-    thisWeek: {
+    weekly: {
       data: [],
       dates: [],
       total: 0
     },
     // bar chart
-    thisMonth: {
+    monthly: {
       data: [],
       dates: [],
       total: 0
@@ -74,24 +74,24 @@ function assembleChartData(workouts) {
       charts.lifetime.data[diff] += amount;
     }
 
-    // Insert data for today, thisWeek, thisMonth charts and lists
+    // Insert data for daily, weekly, monthly charts and lists
     if (diff == 0) {
       // Today
-      charts.today.total += amount;
-      charts.today.data.push(amount);
+      charts.daily.total += amount;
+      charts.daily.data.push(amount);
       let time = moment(workout.createdAt).format("hh:mm");
-      charts.today.dates.push(time);
+      charts.daily.dates.push(time);
       // Add to list
       todayList.push(workout);
     }
     if (diff < 7) {
       // This week
-      charts.thisWeek.total += amount;
-      let data = charts.thisWeek.data;
+      charts.weekly.total += amount;
+      let data = charts.weekly.data;
       if (!data[diff]) {
         data[diff] = amount;
         let date = moment(workout.createdAt).format("MMM Do");
-        charts.thisWeek.dates[diff] = date;
+        charts.weekly.dates[diff] = date;
       } else {
         data[diff] += amount;
       }
@@ -102,12 +102,12 @@ function assembleChartData(workouts) {
     }
     if (diff < 30) {
       // This month
-      charts.thisMonth.total += amount;
-      let data = charts.thisMonth.data;
+      charts.monthly.total += amount;
+      let data = charts.monthly.data;
       if (!data[diff]) {
         data[diff] = amount;
         let date = moment(workout.createdAt).format("MMM Do");
-        charts.thisMonth.dates[diff] = date;
+        charts.monthly.dates[diff] = date;
       } else {
         data[diff] += amount;
       }
@@ -121,15 +121,15 @@ function assembleChartData(workouts) {
   // Replace nulls with zeroes
   cleanup(charts.cumulative, "MM-DD-YYYY");
   cleanup(charts.lifetime, "MM-DD-YYYY");
-  cleanup(charts.thisWeek, "MMM Do");
-  cleanup(charts.thisMonth, "MMM Do");
+  cleanup(charts.weekly, "MMM Do");
+  cleanup(charts.monthly, "MMM Do");
 
   // Reverse order of data
-  charts.today.data.reverse();
-  charts.thisWeek.data.reverse();
-  charts.thisWeek.dates.reverse();
-  charts.thisMonth.data.reverse();
-  charts.thisMonth.dates.reverse();
+  charts.daily.data.reverse();
+  charts.weekly.data.reverse();
+  charts.weekly.dates.reverse();
+  charts.monthly.data.reverse();
+  charts.monthly.dates.reverse();
   charts.lifetime.data.reverse();
   charts.lifetime.dates.reverse();
 
@@ -192,64 +192,57 @@ function assembleWorkoutsList(
   const WorkoutsList = [];
   chartData.workoutsList.forEach(item => {
     if (item == "Today") {
-      let title = assembleTitle(mode, chartData.today.total, name);
+      let title = assembleTitle(mode, chartData.daily.total, name);
       WorkoutsList.push(
         <ListItem
-          key="today-header"
+          key="daily-header"
           title="Today"
           topDivider={true}
           bottomDivider={true}
           rightTitle={title}
-          onPress={() => {
-            if (displayChart === "today") {
-              setDisplayChart(null);
-            } else {
-              setDisplayChart("today");
-            }
-          }}
-          >
-            <Text>Today</Text>
-          </ListItem>
+        >
+          <Text>Today</Text>
+        </ListItem>
       );
     } else if (item == "This Week") {
-      let title = assembleTitle(mode, chartData.thisWeek.total, name);
+      let title = assembleTitle(mode, chartData.weekly.total, name);
       WorkoutsList.push(
         <ListItem
-          key="thisWeek-header"
+          key="weekly-header"
           title="This Week"
           topDivider={true}
           bottomDivider={true}
           rightTitle={title}
           onPress={() => {
-            if (displayChart === "thisWeek") {
+            if (displayChart === "weekly") {
               setDisplayChart(null);
             } else {
-              setDisplayChart("thisWeek");
+              setDisplayChart("weekly");
             }
           }}
-          >
-            <Text>This Week</Text>
-          </ListItem>
+        >
+          <Text>This Week</Text>
+        </ListItem>
       );
     } else if (item == "This Month") {
-      let title = assembleTitle(mode, chartData.thisMonth.total, name);
+      let title = assembleTitle(mode, chartData.monthly.total, name);
       WorkoutsList.push(
         <ListItem
-          key="thisMonth-header"
+          key="monthly-header"
           title="This Month"
           topDivider={true}
           bottomDivider={true}
           rightTitle={title}
           onPress={() => {
-            if (displayChart === "thisMonth") {
+            if (displayChart === "monthly") {
               setDisplayChart(null);
             } else {
-              setDisplayChart("thisMonth");
+              setDisplayChart("monthly");
             }
           }}
-          >
-            <Text>This Month</Text>
-          </ListItem>
+        >
+          <Text>This Month</Text>
+        </ListItem>
       );
     } else if (item == "Cumulative") {
       let title = assembleTitle(mode, chartData.cumulative.total, name);
@@ -267,9 +260,9 @@ function assembleWorkoutsList(
               setDisplayChart("cumulative");
             }
           }}
-          >
-            <Text>Cumulative</Text>
-          </ListItem>
+        >
+          <Text>Cumulative</Text>
+        </ListItem>
       );
     } else {
       let rightTitle;
@@ -297,15 +290,15 @@ function assembleWorkoutsList(
               setWorkoutDeleteID(item.id);
             }
           }}
-          >
-            <Body>
-              <Text>{title}</Text>
-              <Text style={{color: "#BDBDBD"}}>{timestamp}</Text>
-            </Body>
-            <Right>
-              <Text>{rightTitle}</Text>
-            </Right>
-          </ListItem>
+        >
+          <Body>
+            <Text>{title}</Text>
+            <Text style={{ color: "#BDBDBD" }}>{timestamp}</Text>
+          </Body>
+          <Right>
+            <Text>{rightTitle}</Text>
+          </Right>
+        </ListItem>
       );
     }
   });

@@ -72,17 +72,17 @@ export default function ViewExerciseScreen(props) {
   // Hooks for chart data and list construction
   const [displayChart, setDisplayChart] = React.useState(null);
   const [chartData, setChartData] = React.useState({
-    today: {
+    daily: {
       data: [],
       dates: [],
       total: 0
     },
-    thisWeek: {
+    weekly: {
       data: [],
       dates: [],
       total: 0
     },
-    thisMonth: {
+    monthly: {
       data: [],
       dates: [],
       total: 0
