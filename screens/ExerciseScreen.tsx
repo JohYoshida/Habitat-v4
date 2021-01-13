@@ -21,11 +21,21 @@ import {
   Text,
   View
 } from '../components/Themed';
+import {
+  ProgressBar
+} from '../components/ProgressBar';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import {
-  fetchExercises
+  fetchExercises,
+  fetchDailyGoals
 } from "../api/exercise"
+import {
+  fetchGoals
+} from "../api/goal"
+import {
+  fetchWorkouts
+} from "../api/workout"
 // Native Base theme requirements
 import getTheme from "../native-base-theme/components";
 import platform from "../native-base-theme/variables/platform";
@@ -33,6 +43,7 @@ import platform from "../native-base-theme/variables/platform";
 export default function ExerciseScreen(props) {
   const colorScheme = useColorScheme();
   const [exercises, setExercises] = React.useState([]);
+  const [goalData, setGoalData] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [fabIsActive, setFab] = React.useState(false);
 
@@ -42,7 +53,10 @@ export default function ExerciseScreen(props) {
       setRefreshing(true);
       fetchExercises().then(data => {
         setExercises(data);
-        setRefreshing(false);
+        fetchDailyGoals().then(data => {
+          setGoalData(data);
+          setRefreshing(false);
+        })
       });
     },
     [exercises.length] // only run when exercises.length changes
@@ -54,11 +68,29 @@ export default function ExerciseScreen(props) {
       setRefreshing(true);
       fetchExercises().then(data => {
         setExercises(data);
-        setRefreshing(false);
+        fetchDailyGoals().then(data => {
+          setGoalData(data);
+          setRefreshing(false);
+        })
       });
     },
     [refreshing]
   );
+
+  // Conditionally render progress bars for goals
+  let GoalPanel = null;
+  if (goalData.length > 0) {
+    GoalPanel = [];
+    goalData.forEach(item => {
+      GoalPanel.push(
+        <ProgressBar
+          data={[item.total]}
+          goal={item.goal}
+          name={item.name}
+        />
+      );
+    });
+  }
 
   // Assemble exercise list
   const ExercisesList = [];
@@ -83,9 +115,6 @@ export default function ExerciseScreen(props) {
   if (refreshing) {
     ListDisplay = (
       <View>
-        <Text style={styles.emptyListText}>
-          refreshing...
-        </Text>
         <List>{ExercisesList}</List>
       </View>
     );
@@ -108,8 +137,10 @@ export default function ExerciseScreen(props) {
             <ScrollView refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
-              <Text style={styles.title}>Exercise</Text>
+              <Text style={styles.title}>Daily Goals</Text>
+              {GoalPanel}
               <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+              <Text style={styles.title}>Exercise</Text>
               {ListDisplay}
             </ScrollView>
           </Content>
@@ -190,7 +221,7 @@ const styles = StyleSheet.create({
   },
   separator: {
     alignSelf: "center",
-    marginVertical: 30,
+    marginVertical: 10,
     height: 1,
     width: '80%',
   },
