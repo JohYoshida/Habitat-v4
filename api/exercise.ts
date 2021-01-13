@@ -26,6 +26,19 @@ function fetchExercises() {
   });
 }
 
+// Get daily goal data
+function fetchDailyGoals() {
+  return new Promise(resolve => {
+    fetch(`${URL}/dailyGoal`, {
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(json => {
+        resolve(json.data);
+      });
+  });
+}
+
 // Post an exercise to the server
 function postExercise(name, mode, dailyGoal) {
   return new Promise(resolve => {
@@ -80,10 +93,12 @@ function deleteExercise(id, name) {
     }).then(() => resolve());
   });
 }
+
 export {
   fetchExercise,
+  fetchExercises,
+  fetchDailyGoals,
   postExercise,
   updateExercise,
-  deleteExercise,
-  fetchExercises
+  deleteExercise
 };
