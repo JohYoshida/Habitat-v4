@@ -29,11 +29,12 @@ export function ProgressBar(props) {
     }
     return (
       <View
-        style={{ height: 35, padding: 10, flexDirection: "row", justifyContent: "flex-end" }}
+        style={{ height: 35, padding: 5, flexDirection: "row", justifyContent: "flex-end" }}
         key={`${props.name} graph`}
       >
-      <View style={{ marginLeft: 10, flex: 1 }}>
+        <View style={{ marginLeft: 10, flex: 1 }}>
           <YAxis
+            style={{ marginHorizontal: 1, marginVertical: 1, height: 15 }}
             data={[props.name]}
             scale={scale.scaleBand}
             contentInset={{ top: 10, bottom: 10 }}
@@ -41,18 +42,18 @@ export function ProgressBar(props) {
           />
           <BarChart
             horizontal={true}
-            style={{ height: 1, marginVertical: 2 }}
+            style={{ height: 2, marginVertical: 0, padding: 0 }}
             data={[total]}
             contentInset={{ top: 10, bottom: 10 }}
-            svg={{fill}}
+            svg={{ fill }}
             gridMin={0}
             gridMax={max}
           >
             <Grid
-              direction={Grid.Direction.VERTICAL}/>
+              direction={Grid.Direction.VERTICAL} />
           </BarChart>
           <XAxis
-            style={{ marginHorizontal: 1, marginHorizontal: -10, height: 10 }}
+            style={{ marginHorizontal: 1, marginVertical: 1 }}
             data={props.data}
             contentInset={{ left: 10, right: 10 }}
             svg={{ fontSize: 8, fill: "grey" }}
