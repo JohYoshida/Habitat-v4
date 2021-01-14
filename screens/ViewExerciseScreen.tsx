@@ -354,7 +354,7 @@ export default function ViewExerciseScreen(props) {
               data={chartData[label].data}
               goal={goal.value}
               name={goal.type}
-              />
+            />
           </TouchableHighlight>
         );
       }
@@ -365,58 +365,57 @@ export default function ViewExerciseScreen(props) {
     <StyleProvider style={getTheme(platform)}>
       <Container>
         <View style={styles.container}>
-        <Content
-          padder
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
-        <ScrollView>
-        <Button
-          block bordered
-          style={styles.buttons}
-          borderColor={Colors[colorScheme].primary}
-          backgroundColor={Colors[colorScheme].surface}
-          onPress={() =>
-            props.navigation.navigate("Add Workout", {
-              exercise: props.route.params.exercise,
-              refreshLastScreen: onRefresh
-            })
-          }
-        >
-          <ButtonText style={{ color: Colors[colorScheme].primary }} >
-            Add workout
-          </ButtonText>
-        </Button>
-          <BarChart
-            data={chartData.lifetime.data}
-            XAxisData={chartData.lifetime.dates}
-            goal={dailyGoal}
-            name="lifetime"
-          />
-          <Button
-            block bordered
-            style={styles.buttons}
-            borderColor={Colors[colorScheme].primary}
-            backgroundColor={Colors[colorScheme].surface}
-            onPress={() => props.navigation.navigate("Add Goal", {
-                exercise: props.route.params.exercise,
-                refreshLastScreen: onRefresh
-              })
+          <Content
+            padder
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
           >
-            <ButtonText
-              style={{
-                color: Colors[colorScheme].primary
-              }}
-            >Set goal</ButtonText>
-          </Button>
-          {GoalPanel}
-          {WorkoutsList}
-          <View style={styles.buttons}>{DeleteExerciseButtons}</View>
-        </ScrollView>
-        </Content>
-      </View>
+            <ScrollView>
+              <Button
+                block bordered
+                style={styles.buttons}
+                borderColor={Colors[colorScheme].primary}
+                backgroundColor={Colors[colorScheme].surface}
+                onPress={() =>
+                  props.navigation.navigate("Add Workout", {
+                    exercise: props.route.params.exercise,
+                    refreshLastScreen: onRefresh,
+                    refreshHomeScreen: props.route.params.refreshLastScreen
+                  })
+                }
+              >
+                <ButtonText style={{ color: Colors[colorScheme].primary }} >
+                  Add workout
+                </ButtonText>
+              </Button>
+              <BarChart
+                data={chartData.lifetime.data}
+                XAxisData={chartData.lifetime.dates}
+                goal={dailyGoal}
+                name="lifetime"
+              />
+              <Button
+                block bordered
+                style={styles.buttons}
+                borderColor={Colors[colorScheme].primary}
+                backgroundColor={Colors[colorScheme].surface}
+                onPress={() => props.navigation.navigate("Add Goal", {
+                  exercise: props.route.params.exercise,
+                  refreshLastScreen: onRefresh
+                  })
+                }
+              >
+                <ButtonText style={{ color: Colors[colorScheme].primary }} >
+                  Set goal
+                </ButtonText>
+              </Button>
+              {GoalPanel}
+              {WorkoutsList}
+              <View style={styles.buttons}>{DeleteExerciseButtons}</View>
+            </ScrollView>
+          </Content>
+        </View>
       </Container>
     </StyleProvider>
   );
