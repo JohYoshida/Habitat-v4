@@ -25,7 +25,7 @@ export function BarChart(props) {
         value,
         svg: {
           fill: value >= props.goal ?
-            Colors[colorScheme].secondary : Colors[colorScheme].primary
+            Colors[colorScheme].secondary : Colors[colorScheme].secondaryVariant
         }
       })
     })
