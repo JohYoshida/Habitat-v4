@@ -1,16 +1,11 @@
 import * as React from 'react';
 import {
+  StyleSheet
+} from "react-native";
+import {
   Text,
   View
 } from '../components/Themed';
-import {
-  BarChart,
-  Grid,
-  XAxis,
-  YAxis
-} from "react-native-svg-charts";
-import * as shape from "d3-shape";
-import * as scale from 'd3-scale'
 import Colors from "../constants/Colors";
 import useColorScheme from '../hooks/useColorScheme';
 
@@ -21,50 +16,61 @@ export function ProgressBar(props) {
     return (<View></View>);
   } else {
     const total = props.data.reduce((a, b) => a + b, 0);
-    let fill = Colors[colorScheme].primary;
-    let max = props.goal;
     if (total >= props.goal) {
-      fill = Colors[colorScheme].secondary;
-      max = total;
-    }
-    return (
-      <View
-        style={{ height: 35, padding: 5, flexDirection: "row", justifyContent: "flex-end" }}
-        key={`${props.name} graph`}
-      >
-        <View style={{ marginLeft: 10, flex: 1 }}>
-          <YAxis
-            style={{ marginHorizontal: 1, marginVertical: 1, height: 15 }}
-            data={[props.name]}
-            scale={scale.scaleBand}
-            contentInset={{ top: 10, bottom: 10 }}
-            svg={{ fontSize: 10, fill: "grey" }}
-          />
-          <BarChart
-            horizontal={true}
-            style={{ height: 2, marginVertical: 0, padding: 0 }}
-            data={[total]}
-            contentInset={{ top: 10, bottom: 10 }}
-            svg={{ fill }}
-            gridMin={0}
-            gridMax={max}
-          >
-            <Grid
-              direction={Grid.Direction.VERTICAL} />
-          </BarChart>
-          <XAxis
-            style={{ marginHorizontal: 1, marginVertical: 1 }}
-            data={props.data}
-            contentInset={{ left: 10, right: 10 }}
-            svg={{ fontSize: 8, fill: "grey" }}
-            numberOfTicks={10}
-            min={0}
-            max={max}
-          />
+      let extra = total - props.goal;
+      return (
+        <View
+          key={`${props.name} graph 2`}
+        >
+          <Text style={styles.title}>{props.name}</Text>
+          <View style={{ flexDirection: "row", height: 5, marginHorizontal: 10 }}>
+            <View style={{ flex: props.goal, backgroundColor: Colors[colorScheme].secondary }} />
+            <View style={{ flex: extra, backgroundColor: Colors[colorScheme].primary }} />
+          </View>
+          <View style={{ flexDirection: "row", height: 10, marginHorizontal: 10 }}>
+            <Text style={styles.numberLine}>0</Text>
+            <View style={{ flex: props.goal }} />
+            <Text style={styles.numberLine}>{props.goal === total ? "" : props.goal}</Text>
+            <View style={{ flex: extra }} />
+            <Text style={styles.numberLine}>{total}</Text>
+          </View>
         </View>
-      </View>
-    );
-
+      );
+    } else {
+      let remainder = props.goal - total;
+      return (
+        <View
+          key={`${props.name} graph 2`}
+        >
+          <Text style={styles.title}>{props.name}</Text>
+          <View style={{ flexDirection: "row", height: 5, marginHorizontal: 10 }}>
+            <View style={{ flex: total, backgroundColor: Colors[colorScheme].secondaryVariant }} />
+            <View style={{ flex: remainder, backgroundColor: "#37474F" }} />
+          </View>
+          <View style={{ flexDirection: "row", height: 10, marginHorizontal: 10 }}>
+            <Text style={styles.numberLine}>0</Text>
+            <View style={{ flex: total }} />
+            <Text style={styles.numberLine}>{total === 0 ? "" : total}</Text>
+            <View style={{ flex: remainder }} />
+            <Text style={styles.numberLine}>{props.goal}</Text>
+          </View>
+        </View>
+      );
+    }
   }
 
 }
+
+const styles = StyleSheet.create({
+  title: {
+    flex: 1,
+    color: "grey",
+    textAlign: "center",
+    fontSize: 10
+  },
+  numberLine: {
+    color: "grey",
+    textAlign: "center",
+    fontSize: 8
+  }
+});
