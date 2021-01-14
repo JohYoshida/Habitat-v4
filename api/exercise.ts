@@ -1,4 +1,5 @@
 import { URL } from "../constants/URLs";
+const moment = require("moment");
 
 // Get a particular exercise from server
 function fetchExercise(id) {
@@ -29,7 +30,14 @@ function fetchExercises() {
 // Get daily goal data
 function fetchDailyGoals() {
   return new Promise(resolve => {
-    fetch(`${URL}/dailyGoal`, {
+    const to = moment()
+      .utc()
+      .format();
+    const from = moment()
+      .startOf("day")
+      .utc()
+      .format();
+    fetch(`${URL}/dailyGoal/${from}/${to}`, {
       method: "GET"
     })
       .then(res => res.json())
