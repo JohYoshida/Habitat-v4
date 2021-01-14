@@ -283,7 +283,7 @@ function assembleWorkoutsList(
           }
           rightTitle={rightTitle}
           subtitle={timestamp}
-          onPress={() => {
+          onLongPress={() => {
             if (item.id === workoutDeleteID) {
               setWorkoutDeleteID(null);
             } else {
