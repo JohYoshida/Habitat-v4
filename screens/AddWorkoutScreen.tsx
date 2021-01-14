@@ -97,6 +97,7 @@ export default function AddWorkoutScreen(props) {
     body = JSON.stringify(body);
     postWorkout(body).then(() => {
       props.route.params.refreshLastScreen();
+      props.route.params.refreshHomeScreen();
       props.navigation.goBack();
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     });
