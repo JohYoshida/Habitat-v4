@@ -33,6 +33,8 @@ import useColorScheme from '../hooks/useColorScheme';
 import getTheme from "../native-base-theme/components";
 import platform from "../native-base-theme/variables/platform";
 
+const moment = require("moment");
+
 export default function AddWorkoutScreen(props) {
   const colorScheme = useColorScheme();
   // Hooks for exercise picker
@@ -82,7 +84,8 @@ export default function AddWorkoutScreen(props) {
 
   // Construct and post workout to server
   const submitWorkout = () => {
-    let body = {};
+    const createdAt = moment().format();
+    let body = { createdAt };
     const totalSeconds = seconds + minutes * 60 + hours * 3600;
     body.exercise_id = exercises[pickerIndex].id;
     if (exercises[pickerIndex].mode === "reps and sets") {
