@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   RefreshControl,
+  TouchableHighlight,
   StyleSheet,
   ScrollView
 } from 'react-native';
@@ -83,11 +84,16 @@ export default function ExerciseScreen(props) {
     GoalPanel = [];
     goalData.forEach(item => {
       GoalPanel.push(
-        <ProgressBar
-          data={[item.total]}
-          goal={item.goal}
-          name={item.name}
-        />
+        <TouchableHighlight onPress={() => props.navigation.navigate("View Exercise", {
+          exercise: item.exercise,
+          refreshLastScreen: onRefresh
+        })}>
+          <ProgressBar
+            data={[item.total]}
+            goal={item.goal}
+            name={item.name}
+          />
+        </TouchableHighlight>
       );
     });
   }
