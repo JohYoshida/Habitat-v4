@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   RefreshControl,
+  TouchableHighlight,
   ScrollView,
   StyleSheet
 } from 'react-native';
@@ -74,6 +75,8 @@ export default function ViewExerciseScreen(props) {
   // Hooks for deleting data
   const [workoutDeleteID, setWorkoutDeleteID] = React.useState(null);
   const [confirmDeleteWorkout, setConfirmDeleteWorkout] = React.useState(false);
+  const [goalDeleteID, setGoalDeleteID] = React.useState(null);
+  const [confirmDeleteGoal, setConfirmDeleteGoal] = React.useState(false);
   const [confirmDeleteExercise, setConfirmDeleteExercise] = React.useState(
     false
   );
@@ -147,6 +150,21 @@ export default function ViewExerciseScreen(props) {
     },
     [refreshing]
   );
+
+  const removeGoal = goal => {
+    if (goal === null) {
+      setGoalDeleteID(null);
+    } else if (goal.id === goalDeleteID) {
+      deleteGoal(goal.id)
+      onRefresh();
+      props.route.params.refreshLastScreen();
+      setGoalDeleteID(null);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    } else {
+      setGoalDeleteID(goal.id);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+    }
+  }
 
   // Delete exercise from server database by id
   const removeExercise = () => {
@@ -321,13 +339,25 @@ export default function ViewExerciseScreen(props) {
     GoalPanel = [];
     goals.forEach(goal => {
       let label = goal.type
-      GoalPanel.push(
-        <ProgressBar
-          data={chartData[label].data}
-          goal={goal.value}
-          name={goal.type}
-        />
-      );
+      if (goalDeleteID === goal.id) {
+        GoalPanel.push(
+          <ConfirmDeletionButtons
+            key={"confirmDeleteGoal"}
+            confirm={() => removeGoal(goal)}
+            cancel={() => removeGoal()}
+          />
+        );
+      } else {
+        GoalPanel.push(
+          <TouchableHighlight onLongPress={() => removeGoal(goal)}>
+            <ProgressBar
+              data={chartData[label].data}
+              goal={goal.value}
+              name={goal.type}
+              />
+          </TouchableHighlight>
+        );
+      }
     });
   }
 
