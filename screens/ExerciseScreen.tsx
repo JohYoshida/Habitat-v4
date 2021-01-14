@@ -51,14 +51,7 @@ export default function ExerciseScreen(props) {
   // Get exercises when the screen mounts or state updates
   React.useEffect(
     () => {
-      setRefreshing(true);
-      fetchExercises().then(data => {
-        setExercises(data);
-        fetchDailyGoals().then(data => {
-          setGoalData(data);
-          setRefreshing(false);
-        })
-      });
+      onRefresh()
     },
     [exercises.length] // only run when exercises.length changes
   );
