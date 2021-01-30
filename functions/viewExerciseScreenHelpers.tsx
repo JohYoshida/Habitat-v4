@@ -60,16 +60,18 @@ function assembleChartData(workouts) {
     // Calculate difference in days between workout and now
     const diff = moment()
       .startOf("day")
-      .diff(moment(workout.createdAt).startOf("day"), "days");
+      .diff(moment(workout.createdAt)
+        .startOf("day"), "days");
     let amount = calculateAmount(workout);
 
     // Insert data for lifetime chart
     charts.lifetime.total += amount;
     if (!charts.lifetime.data[diff]) {
       charts.lifetime.data[diff] = amount;
-      charts.lifetime.dates[diff] = moment(workout.createdAt).format(
-        "MM-DD-YYYY"
-      );
+      charts.lifetime.dates[diff] = moment(workout.createdAt)
+        .format(
+          "MM-DD-YYYY"
+        );
     } else {
       charts.lifetime.data[diff] += amount;
     }
@@ -79,7 +81,8 @@ function assembleChartData(workouts) {
       // Today
       charts.daily.total += amount;
       charts.daily.data.push(amount);
-      let time = moment(workout.createdAt).format("hh:mm");
+      let time = moment(workout.createdAt)
+        .format("hh:mm");
       charts.daily.dates.push(time);
       // Add to list
       todayList.push(workout);
@@ -90,7 +93,8 @@ function assembleChartData(workouts) {
       let data = charts.weekly.data;
       if (!data[diff]) {
         data[diff] = amount;
-        let date = moment(workout.createdAt).format("MMM Do");
+        let date = moment(workout.createdAt)
+          .format("MMM Do");
         charts.weekly.dates[diff] = date;
       } else {
         data[diff] += amount;
@@ -106,7 +110,8 @@ function assembleChartData(workouts) {
       let data = charts.monthly.data;
       if (!data[diff]) {
         data[diff] = amount;
-        let date = moment(workout.createdAt).format("MMM Do");
+        let date = moment(workout.createdAt)
+          .format("MMM Do");
         charts.monthly.dates[diff] = date;
       } else {
         data[diff] += amount;
@@ -266,7 +271,8 @@ function assembleWorkoutsList(
       );
     } else {
       let rightTitle;
-      let timestamp = moment(item.createdAt).format("h:mm a MM-DD-YYYY");
+      let timestamp = moment(item.createdAt)
+        .format("h:mm a MM-DD-YYYY");
       if (mode === "time") rightTitle = assembleTitle(mode, item.seconds, name);
       else rightTitle = assembleTitle(mode, item.reps * item.sets, name);
       let title;
