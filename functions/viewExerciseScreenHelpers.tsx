@@ -206,7 +206,12 @@ function assembleWorkoutsList(
           bottomDivider={true}
           rightTitle={title}
         >
-          <Text>Today</Text>
+          <Body>
+            <Text>Today</Text>
+           </Body>
+          <Right>
+            <Text>{title}</Text>
+          </Right>
         </ListItem>
       );
     } else if (item == "This Week") {
@@ -226,7 +231,13 @@ function assembleWorkoutsList(
             }
           }}
         >
-          <Text>This Week</Text>
+          <Body>
+            <Text>This Week</Text>
+            <Text style={{ color: "#BDBDBD" }}>since {chartData.weekly.dates[0]}</Text>
+           </Body>
+          <Right>
+            <Text>{title}</Text>
+          </Right>
         </ListItem>
       );
     } else if (item == "This Month") {
@@ -246,11 +257,18 @@ function assembleWorkoutsList(
             }
           }}
         >
-          <Text>This Month</Text>
+          <Body>
+            <Text>This Month</Text>
+            <Text style={{ color: "#BDBDBD" }}>since {chartData.monthly.dates[0]}</Text>
+           </Body>
+          <Right>
+            <Text>{title}</Text>
+          </Right>
         </ListItem>
       );
     } else if (item == "Cumulative") {
       let title = assembleTitle(mode, chartData.cumulative.total, name);
+      console.log(chartData.lifetime.dates[0]);
       WorkoutsList.push(
         <ListItem
           key="cumulative-header"
@@ -266,7 +284,13 @@ function assembleWorkoutsList(
             }
           }}
         >
-          <Text>Cumulative</Text>
+          <Body>
+            <Text>Cumulative</Text>
+            <Text style={{ color: "#BDBDBD" }}>since {chartData.lifetime.dates[0]}</Text>
+           </Body>
+          <Right>
+            <Text>{title}</Text>
+          </Right>
         </ListItem>
       );
     } else {
