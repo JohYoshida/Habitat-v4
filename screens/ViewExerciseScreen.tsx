@@ -136,17 +136,19 @@ export default function ViewExerciseScreen(props) {
       const exercise_id = props.route.params.exercise.id;
       setRefreshing(true);
       // Get and set workouts from database
-      fetchWorkouts(exercise_id).then(data => {
-        setWorkouts(data);
-        setChartData(assembleChartData(data));
-        fetchGoalsByExercise(exercise_id).then(data => {
-          setGoals(data);
-          data.forEach(datum => {
-            if (datum.type === "daily") setDailyGoal(datum.value);
-          })
-          setRefreshing(false);
+      fetchWorkouts(exercise_id)
+        .then(data => {
+          setWorkouts(data);
+          setChartData(assembleChartData(data));
+          fetchGoalsByExercise(exercise_id)
+            .then(data => {
+              setGoals(data);
+              data.forEach(datum => {
+                if (datum.type === "daily") setDailyGoal(datum.value);
+              })
+              setRefreshing(false);
+            });
         });
-      });
     },
     [refreshing]
   );
@@ -172,12 +174,13 @@ export default function ViewExerciseScreen(props) {
       id,
       name
     } = props.route.params.exercise;
-    deleteExercise(id, name).then(() => {
-      props.route.params.refreshLastScreen();
-      setConfirmDeleteExercise(false);
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      props.navigation.goBack();
-    });
+    deleteExercise(id, name)
+      .then(() => {
+        props.route.params.refreshLastScreen();
+        setConfirmDeleteExercise(false);
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        props.navigation.goBack();
+      });
   };
 
   // Delete workout from server database by id
@@ -196,22 +199,24 @@ export default function ViewExerciseScreen(props) {
         }
       }
     });
-    deleteWorkout(workoutDeleteID, props.route.params.exercise.id, amount).then(
-      () => {
-        setWorkoutDeleteID(null);
-        setConfirmDeleteWorkout(false);
-        onRefresh();
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      }
-    );
+    deleteWorkout(workoutDeleteID, props.route.params.exercise.id, amount)
+      .then(
+        () => {
+          setWorkoutDeleteID(null);
+          setConfirmDeleteWorkout(false);
+          onRefresh();
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        }
+      );
   };
 
   // Get the exercise again and refresh the lifetimeTotal
   const refreshLifetimeTotal = () => {
     const id = props.route.params.exercise.id;
-    fetchExercise(id).then(exercise => {
-      setLifetimeTotal(exercise.lifetimeTotal);
-    });
+    fetchExercise(id)
+      .then(exercise => {
+        setLifetimeTotal(exercise.lifetimeTotal);
+      });
   };
 
   // Assemble workouts list
@@ -269,7 +274,8 @@ export default function ViewExerciseScreen(props) {
   if (workoutDeleteID !== null) {
     WorkoutsList.forEach((object, index) => {
       if (object && object.key === workoutDeleteID) {
-        WorkoutsList.splice(index + 1, 0, DeleteWorkoutButtons).join();
+        WorkoutsList.splice(index + 1, 0, DeleteWorkoutButtons)
+          .join();
       }
     });
   }
@@ -328,7 +334,8 @@ export default function ViewExerciseScreen(props) {
     }
     WorkoutsList.forEach((object, index) => {
       if (object && object.key == `${displayChart}-header`) {
-        WorkoutsList.splice(index + 1, 0, chart).join();
+        WorkoutsList.splice(index + 1, 0, chart)
+          .join();
       }
     });
   }
