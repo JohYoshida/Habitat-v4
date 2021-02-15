@@ -43,8 +43,12 @@ export default function AddGoalScreen(props) {
   const [type, updateType] = React.useState("daily");
   const [typeIndex, updateTypeIndex] = React.useState(0);
 
-  // Hooks for value
+  // Hooks for number value
   const [value, updateValue] = React.useState();
+  // Hooks for time values
+  const [seconds, updateSeconds] = React.useState(0);
+  const [minutes, updateMinutes] = React.useState(0);
+  const [hours, updateHours] = React.useState(0);
 
   // Get exercises when the screen mounts or state updates
   React.useEffect(
@@ -67,10 +71,11 @@ export default function AddGoalScreen(props) {
 
   // Construct and post goal to server
   const submitGoal = () => {
+    let mode = props.route.params.exercise.mode;
     const body = JSON.stringify({
       exercise_id: exercises[pickerIndex].id,
       type: type,
-      value: Number(value)
+      value: mode === "time" ? Number(seconds + minutes * 60 + hours * 3600) : Number(value)
     })
     postGoal(body)
       .then(() => {
@@ -116,6 +121,25 @@ export default function AddGoalScreen(props) {
     </View>
   );
 
+  const numberPad = () => {
+    if (props.route.params.exercise.mode === "time") {
+      return <NumberPad
+        mode={"time"}
+        callback={string => {
+          updateHours(Number(string.slice(0, 2)));
+          updateMinutes(Number(string.slice(2, 4)));
+          updateSeconds(Number(string.slice(4, 6)));
+        }}
+      />
+    } else {
+      return <NumberPad
+      mode={"number"}
+      callback={text => {
+        updateValue(text);
+      }}
+    />
+    }
+  }
 
   const InputDisplay = (
     <View>
@@ -127,12 +151,7 @@ export default function AddGoalScreen(props) {
         selectedIndex={typeIndex}
         buttons={typeButtons}
       />
-      <NumberPad
-        mode={"number"}
-        callback={text => {
-          updateValue(text);
-        }}
-      />
+      {numberPad()}
     </View>
   );
 
