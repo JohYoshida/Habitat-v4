@@ -268,7 +268,6 @@ function assembleWorkoutsList(
       );
     } else if (item == "Cumulative") {
       let title = assembleTitle(mode, chartData.cumulative.total, name);
-      console.log(chartData.lifetime.dates[0]);
       WorkoutsList.push(
         <ListItem
           key="cumulative-header"
