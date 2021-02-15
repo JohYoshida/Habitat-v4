@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   RefreshControl,
-  TouchableHighlight,
   StyleSheet,
   ScrollView
 } from 'react-native';
@@ -22,14 +21,12 @@ import {
   Text,
   View
 } from '../components/Themed';
-import {
-  ProgressBar
-} from '../components/ProgressBar';
+import GoalPanel from '../components/GoalPanel';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import {
   fetchExercises,
-  fetchDailyGoals
+  fetchExerciseGoals
 } from "../api/exercise"
 import {
   fetchGoals
@@ -44,7 +41,9 @@ import platform from "../native-base-theme/variables/platform";
 export default function ExerciseScreen(props) {
   const colorScheme = useColorScheme();
   const [exercises, setExercises] = React.useState([]);
-  const [goalData, setGoalData] = React.useState([]);
+  const [dailyGoalData, setDailyGoalData] = React.useState([]);
+  const [weeklyGoalData, setWeeklyGoalData] = React.useState([]);
+  const [monthlyGoalData, setMonthlyGoalData] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [fabIsActive, setFab] = React.useState(false);
 
@@ -60,36 +59,32 @@ export default function ExerciseScreen(props) {
   const onRefresh = React.useCallback(
     () => {
       setRefreshing(true);
-      fetchExercises().then(data => {
-        setExercises(data);
-        fetchDailyGoals().then(data => {
-          setGoalData(data);
-          setRefreshing(false);
-        })
-      });
+      // Get exercise data
+      fetchExercises()
+        .then(data => {
+          setExercises(data);
+          // Get daily, weekly, and monthly goals
+          fetchExerciseGoals("daily")
+            .then(data => {
+              setDailyGoalData(data);
+              fetchExerciseGoals("weekly")
+                .then(data => {
+                  setWeeklyGoalData(data);
+                  fetchExerciseGoals("monthly")
+                    .then(data => {
+                      setMonthlyGoalData(data);
+                      // Finally, set refreshing to false
+                      setRefreshing(false);
+                      console.log("dailyGoalData", dailyGoalData.length);
+                      console.log("weeklyGoalData", weeklyGoalData.length);
+                      console.log("monthlyGoalData", monthlyGoalData.length);
+                    })
+                })
+            })
+        });
     },
     [refreshing]
   );
-
-  // Conditionally render progress bars for goals
-  let GoalPanel = null;
-  if (goalData.length > 0) {
-    GoalPanel = [];
-    goalData.forEach(item => {
-      GoalPanel.push(
-        <TouchableHighlight onPress={() => props.navigation.navigate("View Exercise", {
-          exercise: item.exercise,
-          refreshLastScreen: onRefresh
-        })}>
-          <ProgressBar
-            data={[item.total]}
-            goal={item.goal}
-            name={item.name}
-          />
-        </TouchableHighlight>
-      );
-    });
-  }
 
   // Assemble exercise list
   const ExercisesList = [];
@@ -137,7 +132,13 @@ export default function ExerciseScreen(props) {
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
               <Text style={styles.title}>Daily Goals</Text>
-              {GoalPanel}
+              <GoalPanel
+                navigator={props.navigation}
+                dailyGoalData={dailyGoalData}
+                weeklyGoalData={weeklyGoalData}
+                monthlyGoalData={monthlyGoalData}
+                onRefresh={onRefresh}
+              />
               <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
               <Text style={styles.title}>Exercise</Text>
               {ListDisplay}

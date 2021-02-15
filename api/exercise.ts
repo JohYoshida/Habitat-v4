@@ -47,6 +47,29 @@ function fetchDailyGoals() {
   });
 }
 
+// Get daily, weekly, or monthly goal data for ExerciseScreen
+function fetchExerciseGoals(type) {
+  return new Promise(resolve => {
+    const to = moment()
+      .utc()
+      .format();
+    let startOf = "day";
+    if (type === "weekly") startOf = "week";
+    if (type === "monthly") startOf = "month";
+    const from = moment()
+      .startOf(startOf)
+      .utc()
+      .format();
+    fetch(`${URL}/exercises/${type}/${from}/${to}`, {
+      method: "GET"
+    })
+      .then(res => res.json())
+      .then(json => {
+        resolve(json.data);
+      });
+  });
+}
+
 // Post an exercise to the server
 function postExercise(name, mode, dailyGoal) {
   return new Promise(resolve => {
@@ -106,6 +129,7 @@ export {
   fetchExercise,
   fetchExercises,
   fetchDailyGoals,
+  fetchExerciseGoals,
   postExercise,
   updateExercise,
   deleteExercise
