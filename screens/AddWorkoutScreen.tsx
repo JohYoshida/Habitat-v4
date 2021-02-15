@@ -27,6 +27,7 @@ import {
 } from '../components/Themed';
 import NumberPad from "../components/NumberPad";
 import CustomButtons from "../components/CustomButtons";
+import Stopwatch from "../components/Stopwatch";
 import Colors from "../constants/Colors";
 import useColorScheme from '../hooks/useColorScheme';
 // Native base theme requirements
@@ -52,6 +53,8 @@ export default function AddWorkoutScreen(props) {
   const [setsIndex, updateSetsIndex] = React.useState(0);
 
   // Hooks for time
+  const timeInputButtons = ["input", "stopwatch"]
+  const [timeInputMode, updateTimeInputMode] = React.useState(0)
   const [seconds, updateSeconds] = React.useState(0);
   const [minutes, updateMinutes] = React.useState(0);
   const [hours, updateHours] = React.useState(0);
@@ -84,12 +87,16 @@ export default function AddWorkoutScreen(props) {
       });
   };
 
+  const getTime = (time) => {
+    updateSeconds(time);
+    return time;
+  }
+
   // Construct and post workout to server
   const submitWorkout = () => {
-    const createdAt = moment()
-      .format();
     let body = {
-      createdAt
+      createdAt: moment()
+        .format()
     };
     const totalSeconds = seconds + minutes * 60 + hours * 3600;
     body.exercise_id = exercises[pickerIndex].id;
@@ -219,14 +226,26 @@ export default function AddWorkoutScreen(props) {
   // Construct TimeDisplay
   const TimeDisplay = (
     <View>
-      <NumberPad
-        mode={"time"}
-        callback={string => {
-          updateHours(Number(string.slice(0, 2)));
-          updateMinutes(Number(string.slice(2, 4)));
-          updateSeconds(Number(string.slice(4, 6)));
+      <CustomButtons
+        onPress={index => {
+          updateTimeInputMode(index);
         }}
+        selectedIndex={timeInputMode}
+        buttons={timeInputButtons}
       />
+      {
+        timeInputMode === 0 ?
+        <NumberPad
+          mode={"time"}
+          callback={string => {
+            updateHours(Number(string.slice(0, 2)));
+            updateMinutes(Number(string.slice(2, 4)));
+            updateSeconds(Number(string.slice(4, 6)));
+          }}
+        /> :
+        <Stopwatch getTime={getTime}/>
+      }
+
     </View>
   );
 
