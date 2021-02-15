@@ -75,9 +75,6 @@ export default function ExerciseScreen(props) {
                       setMonthlyGoalData(data);
                       // Finally, set refreshing to false
                       setRefreshing(false);
-                      console.log("dailyGoalData", dailyGoalData.length);
-                      console.log("weeklyGoalData", weeklyGoalData.length);
-                      console.log("monthlyGoalData", monthlyGoalData.length);
                     })
                 })
             })
