@@ -60,32 +60,37 @@ export default function AddWorkoutScreen(props) {
   React.useEffect(
     () => {
       // updateExercises();
-      fetchExercises().then(data => {
-        data.forEach((item, index) => {
-          if (
-            props.route.params.exercise &&
-            props.route.params.exercise.id === item.id
-          ) {
-            setPickerIndex(index);
-          }
+      fetchExercises()
+        .then(data => {
+          data.forEach((item, index) => {
+            if (
+              props.route.params.exercise &&
+              props.route.params.exercise.id === item.id
+            ) {
+              setPickerIndex(index);
+            }
+          });
+          setExercises(data);
         });
-        setExercises(data);
-      });
     },
     [exercises.length] // only run when exercises.length changes
   );
 
   // Fetch and set exercises
   const updateExercises = () => {
-    fetchExercises().then(data => {
-      setExercises(data);
-    });
+    fetchExercises()
+      .then(data => {
+        setExercises(data);
+      });
   };
 
   // Construct and post workout to server
   const submitWorkout = () => {
-    const createdAt = moment().format();
-    let body = { createdAt };
+    const createdAt = moment()
+      .format();
+    let body = {
+      createdAt
+    };
     const totalSeconds = seconds + minutes * 60 + hours * 3600;
     body.exercise_id = exercises[pickerIndex].id;
     if (exercises[pickerIndex].mode === "reps and sets") {
@@ -95,12 +100,13 @@ export default function AddWorkoutScreen(props) {
       body.seconds = totalSeconds;
     }
     body = JSON.stringify(body);
-    postWorkout(body).then(() => {
-      props.route.params.refreshLastScreen();
-      props.route.params.refreshHomeScreen();
-      props.navigation.goBack();
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    });
+    postWorkout(body)
+      .then(() => {
+        props.route.params.refreshLastScreen();
+        props.route.params.refreshHomeScreen();
+        props.navigation.goBack();
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      });
   };
 
   // Construct PickerList
