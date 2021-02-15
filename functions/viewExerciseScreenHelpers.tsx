@@ -208,7 +208,7 @@ function assembleWorkoutsList(
         >
           <Body>
             <Text>Today</Text>
-           </Body>
+          </Body>
           <Right>
             <Text>{title}</Text>
           </Right>
@@ -234,7 +234,7 @@ function assembleWorkoutsList(
           <Body>
             <Text>This Week</Text>
             <Text style={{ color: "#BDBDBD" }}>since {chartData.weekly.dates[0]}</Text>
-           </Body>
+          </Body>
           <Right>
             <Text>{title}</Text>
           </Right>
@@ -260,7 +260,7 @@ function assembleWorkoutsList(
           <Body>
             <Text>This Month</Text>
             <Text style={{ color: "#BDBDBD" }}>since {chartData.monthly.dates[0]}</Text>
-           </Body>
+          </Body>
           <Right>
             <Text>{title}</Text>
           </Right>
@@ -286,7 +286,7 @@ function assembleWorkoutsList(
           <Body>
             <Text>Cumulative</Text>
             <Text style={{ color: "#BDBDBD" }}>since {chartData.lifetime.dates[0]}</Text>
-           </Body>
+          </Body>
           <Right>
             <Text>{title}</Text>
           </Right>
