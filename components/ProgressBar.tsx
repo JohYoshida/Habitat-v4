@@ -9,7 +9,7 @@ import {
 import Colors from "../constants/Colors";
 import useColorScheme from '../hooks/useColorScheme';
 
-export function ProgressBar(props) {
+export default function ProgressBar(props) {
   const colorScheme = useColorScheme();
 
   if (!props.data) {

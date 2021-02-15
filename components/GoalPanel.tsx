@@ -7,9 +7,7 @@ import {
   Text,
   View
 } from '../components/Themed';
-import {
-  ProgressBar
-} from '../components/ProgressBar';
+import ProgressBar from '../components/ProgressBar';
 import CustomButtons from '../components/CustomButtons';
 import Colors from "../constants/Colors";
 import useColorScheme from '../hooks/useColorScheme';
@@ -71,9 +69,7 @@ export default function GoalPanel(props) {
       }
       break;
     default:
-
   }
-
 
   return (
     <View>
@@ -89,9 +85,6 @@ export default function GoalPanel(props) {
       {goalPanel}
     </View>
   );
-
-
-
 }
 
 const styles = StyleSheet.create({

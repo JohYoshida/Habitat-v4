@@ -23,9 +23,7 @@ import {
 import {
   LineChart
 } from '../components/LineChart';
-import {
-  ProgressBar
-} from '../components/ProgressBar';
+import ProgressBar from '../components/ProgressBar';
 import * as Haptics from 'expo-haptics';
 import {
   Grid,
@@ -410,7 +408,7 @@ export default function ViewExerciseScreen(props) {
                 onPress={() => props.navigation.navigate("Add Goal", {
                   exercise: props.route.params.exercise,
                   refreshLastScreen: onRefresh
-                  })
+                })
                 }
               >
                 <ButtonText style={{ color: Colors[colorScheme].primary }} >
