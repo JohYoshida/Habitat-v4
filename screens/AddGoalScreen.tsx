@@ -49,17 +49,18 @@ export default function AddGoalScreen(props) {
   // Get exercises when the screen mounts or state updates
   React.useEffect(
     () => {
-      fetchExercises().then(data => {
-        data.forEach((item, index) => {
-          if (
-            props.route.params.exercise &&
-            props.route.params.exercise.id === item.id
-          ) {
-            setPickerIndex(index);
-          }
+      fetchExercises()
+        .then(data => {
+          data.forEach((item, index) => {
+            if (
+              props.route.params.exercise &&
+              props.route.params.exercise.id === item.id
+            ) {
+              setPickerIndex(index);
+            }
+          });
+          setExercises(data);
         });
-        setExercises(data);
-      });
     },
     [exercises.length] // only run when exercises.length changes
   );
@@ -71,7 +72,8 @@ export default function AddGoalScreen(props) {
       type: type,
       value: Number(value)
     })
-    postGoal(body).then(() => {
+    postGoal(body)
+      .then(() => {
         props.route.params.refreshLastScreen();
         props.navigation.goBack();
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
