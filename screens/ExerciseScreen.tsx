@@ -128,7 +128,7 @@ export default function ExerciseScreen(props) {
             <ScrollView refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
-              <Text style={styles.title}>Daily Goals</Text>
+              <Text style={styles.title}>Goals</Text>
               <GoalPanel
                 navigator={props.navigation}
                 dailyGoalData={dailyGoalData}
