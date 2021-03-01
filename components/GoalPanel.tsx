@@ -31,6 +31,7 @@ export default function GoalPanel(props) {
           data={[item.total]}
           goal={item.goal}
           name={item.name}
+          mode={item.exercise.mode}
         />
       </TouchableHighlight>
     );

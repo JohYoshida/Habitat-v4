@@ -359,6 +359,7 @@ export default function ViewExerciseScreen(props) {
               data={chartData[label].data}
               goal={goal.value}
               name={goal.type}
+              mode={props.route.params.exercise.mode}
             />
           </TouchableHighlight>
         );

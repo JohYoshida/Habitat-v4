@@ -12,6 +12,24 @@ import useColorScheme from '../hooks/useColorScheme';
 export default function ProgressBar(props) {
   const colorScheme = useColorScheme();
 
+  const formatTime = (seconds) => {
+    if (props.mode !== "time") {
+      return seconds;
+    }
+    const getSeconds = Number(`0${(seconds % 60)}`.slice(-2));
+    const minutes = Number(`${Math.floor(seconds / 60)}`);
+    const getMinutes = Number(`0${minutes % 60}`.slice(-2));
+    const getHours = Number(`0${Math.floor(seconds / 3600)}`.slice(-2));
+
+    if (seconds >= 3600) {
+      return `${getHours}h ${getMinutes}m ${getSeconds}s`
+    } else if (seconds >= 60) {
+      return `${getMinutes}m ${getSeconds}s`
+    } else {
+      return `${getSeconds}s`
+    }
+  }
+
   if (!props.data) {
     return (<View></View>);
   } else {
@@ -20,7 +38,7 @@ export default function ProgressBar(props) {
       let extra = total - props.goal;
       return (
         <View
-          key={`${props.name} graph 2`}
+          key={`${props.name} ProgressBar`}
         >
           <Text style={styles.title}>{props.name}</Text>
           <View style={{ flexDirection: "row", height: 5, marginHorizontal: 10 }}>
@@ -30,9 +48,9 @@ export default function ProgressBar(props) {
           <View style={{ flexDirection: "row", height: 10, marginHorizontal: 10 }}>
             <Text style={styles.numberLine}>0</Text>
             <View style={{ flex: props.goal }} />
-            <Text style={styles.numberLine}>{props.goal === total ? "" : props.goal}</Text>
+            <Text style={styles.numberLine}>{props.goal === formatTime(total) ? "" : formatTime(props.goal)}</Text>
             <View style={{ flex: extra }} />
-            <Text style={styles.numberLine}>{total}</Text>
+            <Text style={styles.numberLine}>{formatTime(total)}</Text>
           </View>
         </View>
       );
@@ -40,7 +58,7 @@ export default function ProgressBar(props) {
       let remainder = props.goal - total;
       return (
         <View
-          key={`${props.name} graph 2`}
+          key={`${props.name} ProgressBar`}
         >
           <Text style={styles.title}>{props.name}</Text>
           <View style={{ flexDirection: "row", height: 5, marginHorizontal: 10 }}>
@@ -50,9 +68,9 @@ export default function ProgressBar(props) {
           <View style={{ flexDirection: "row", height: 10, marginHorizontal: 10 }}>
             <Text style={styles.numberLine}>0</Text>
             <View style={{ flex: total }} />
-            <Text style={styles.numberLine}>{total === 0 ? "" : total}</Text>
+            <Text style={styles.numberLine}>{total === 0 ? "" : formatTime(total)}</Text>
             <View style={{ flex: remainder }} />
-            <Text style={styles.numberLine}>{props.goal}</Text>
+            <Text style={styles.numberLine}>{formatTime(props.goal)}</Text>
           </View>
         </View>
       );
