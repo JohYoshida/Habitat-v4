@@ -52,7 +52,7 @@ import {
 import {
   assembleChartData,
   assembleWorkoutsList
-} from "../functions/viewExerciseScreenHelpers";
+} from "../lib/viewExerciseScreenHelpers";
 import Colors from "../constants/Colors";
 import useColorScheme from '../hooks/useColorScheme';
 // Native base theme requirements
