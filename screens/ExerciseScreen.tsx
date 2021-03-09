@@ -137,18 +137,18 @@ export default function ExerciseScreen(props) {
                 onRefresh={onRefresh}
               />
               <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-              <Text style={styles.title}>Exercise</Text>
+              <Text style={styles.title}>Exercises</Text>
               {ListDisplay}
             </ScrollView>
           </Content>
           <Fab
             active={fabIsActive}
             direction="up"
-            containerStyle={{ }}
+            containerStyle={{}}
             style={
               !fabIsActive ?
-              { backgroundColor: Colors[colorScheme].primary } :
-              { backgroundColor: Colors[colorScheme].secondary }
+                { backgroundColor: Colors[colorScheme].primary } :
+                { backgroundColor: Colors[colorScheme].secondary }
             }
             position="bottomRight"
             onPress={() => setFab(!fabIsActive)}>
@@ -156,8 +156,8 @@ export default function ExerciseScreen(props) {
               name={!fabIsActive ? "add-circle-sharp" : "caret-down-circle-sharp"}
               style={
                 !fabIsActive ?
-                { color: Colors[colorScheme].onPrimary } :
-                { color: Colors[colorScheme].onSecondary }
+                  { color: Colors[colorScheme].onPrimary } :
+                  { color: Colors[colorScheme].onSecondary }
               }
             />
             <Button
@@ -169,7 +169,7 @@ export default function ExerciseScreen(props) {
                 })
               }
             >
-              <Icon name="add-sharp" style={{ color: Colors[colorScheme].onPrimary }}/>
+              <Icon name="add-sharp" style={{ color: Colors[colorScheme].onPrimary }} />
             </Button>
             <Button
               style={{ backgroundColor: Colors[colorScheme].primary }}
@@ -180,7 +180,7 @@ export default function ExerciseScreen(props) {
                 })
               }
             >
-              <Icon name="star-sharp" style={{ color: Colors[colorScheme].onPrimary }}/>
+              <Icon name="star-sharp" style={{ color: Colors[colorScheme].onPrimary }} />
             </Button>
             <Button
               style={{ backgroundColor: Colors[colorScheme].primary }}
@@ -191,7 +191,7 @@ export default function ExerciseScreen(props) {
                 })
               }
             >
-              <Icon name="analytics-sharp" style={{ color: Colors[colorScheme].onPrimary }}/>
+              <Icon name="analytics-sharp" style={{ color: Colors[colorScheme].onPrimary }} />
             </Button>
           </Fab>
         </View>
