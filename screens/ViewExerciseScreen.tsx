@@ -32,6 +32,7 @@ import {
 } from "react-native-svg-charts";
 import * as shape from "d3-shape";
 import NumberPad from "../components/NumberPad";
+import GraphPanel from "../components/GraphPanel";
 import {
   ConfirmDeletionButtons
 } from "../components/ConfirmDeletionButtons";
@@ -53,6 +54,11 @@ import {
   assembleChartData,
   assembleWorkoutsList
 } from "../lib/viewExerciseScreenHelpers";
+import {
+  sortDaily,
+  sortWeekly,
+  sortMonthly
+} from "../lib/dataToGraph";
 import Colors from "../constants/Colors";
 import useColorScheme from '../hooks/useColorScheme';
 // Native base theme requirements
@@ -66,6 +72,9 @@ export default function ViewExerciseScreen(props) {
 
   // Hook for storing workout data
   const [workouts, setWorkouts] = React.useState([]);
+  const [dailyGraphData, setDailyGraphData] = React.useState([]);
+  const [weeklyGraphData, setWeeklyGraphData] = React.useState([]);
+  const [monthlyGraphData, setMonthlyGraphData] = React.useState([]);
 
   // Hooks for storing goal data
   const [goals, setGoals] = React.useState({});
@@ -137,6 +146,9 @@ export default function ViewExerciseScreen(props) {
       fetchWorkouts(exercise_id)
         .then(data => {
           setWorkouts(data);
+          setDailyGraphData(sortDaily(data));
+          setWeeklyGraphData(sortWeekly(data));
+          setMonthlyGraphData(sortMonthly(data));
           setChartData(assembleChartData(data));
           fetchGoalsByExercise(exercise_id)
             .then(data => {
@@ -395,11 +407,11 @@ export default function ViewExerciseScreen(props) {
                   Add workout
                 </ButtonText>
               </Button>
-              <BarChart
-                data={chartData.lifetime.data}
-                XAxisData={chartData.lifetime.dates}
-                goal={dailyGoal}
-                name="lifetime"
+              <GraphPanel
+                dailyGraphData={dailyGraphData}
+                weeklyGraphData={weeklyGraphData}
+                monthlyGraphData={monthlyGraphData}
+                goals={goals}
               />
               <Button
                 block bordered
