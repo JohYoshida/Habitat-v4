@@ -1,5 +1,5 @@
-const tintLight = "#2f95dc";
-const tintDark = "#fff";
+const tintLight = "#CFD8DC";
+const tintDark = "#37474F";
 const primaryLight = "#6200ee";
 const primaryDark = "#bb86fc";
 const primaryVariantLight = "#3700b3";

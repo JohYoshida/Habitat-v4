@@ -63,7 +63,7 @@ export default function ProgressBar(props) {
           <Text style={styles.title}>{props.name}</Text>
           <View style={{ flexDirection: "row", height: 5, marginHorizontal: 10 }}>
             <View style={{ flex: total, backgroundColor: Colors[colorScheme].secondaryVariant }} />
-            <View style={{ flex: remainder, backgroundColor: "#37474F" }} />
+            <View style={{ flex: remainder, backgroundColor: Colors[colorScheme].tint }} />
           </View>
           <View style={{ flexDirection: "row", height: 10, marginHorizontal: 10 }}>
             <Text style={styles.numberLine}>0</Text>
